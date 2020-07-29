@@ -27,7 +27,7 @@ No messages.
 ###### In
 
 ```markdown
-[alpha](http://domain.com).
+[alpha](http://domain.com/mylink).
 
 ![charlie](http://domain.com/echo.png "foxtrot").
 ```
@@ -35,8 +35,8 @@ No messages.
 ###### Out
 
 ```text
-1:1-1:9: Don’t use links without URL
-3:1-3:11: Don’t use images without URL
+ 1:1-1:9: warning  The link URL should only without host: '/mylink'  url-no-domain  remark-lint
+3:1-3:11: warning  The image URL should only without host: '/echo.png'  url-no-domain  remark-lint
 ```
 
 ## Install
