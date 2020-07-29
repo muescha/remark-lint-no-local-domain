@@ -39,6 +39,34 @@ No messages.
 3:1-3:11: warning  The image URL should only without host: '/echo.png'  url-no-domain  remark-lint
 ```
 
+## Options
+
+### `options.domain`
+
+`domain := <RegExpString>`
+
+The domain which should prohibited as a RegExp.
+
+### `options.root`
+
+`root := <undefined|true|false>`
+
+with the following behavior
+      
+- `undefined`: show all
+- `true`: use only root domains without a path
+- `false`: use only root domains with a path
+
+### `options.linkified`
+
+`linkified := <undefined|true|false>`
+
+with the following behavior
+      
+- `undefined`: show all
+- `true`: check only linkified links
+- `false`: check only not linkified links
+
 ## Install
 
 [npm][https://docs.npmjs.com/cli/install]:
