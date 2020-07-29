@@ -14,8 +14,13 @@ This rule is not included in any default preset
 
 ```markdown
 [alpha](/link).
+[other link](http://example.com/mylink).
 
 ![charlie](/echo.png "foxtrot").
+
+[bar]
+
+[bar]: http://domain.com/more/text "Example Domain"
 ```
 
 ###### Out
@@ -28,15 +33,21 @@ No messages.
 
 ```markdown
 [alpha](http://domain.com/mylink).
+[other link](http://example.com/mylink).
 
 ![charlie](http://domain.com/echo.png "foxtrot").
+
+[bar]
+
+[bar]: http://domain.com/more/text "Example Domain"
 ```
 
 ###### Out
 
 ```text
- 1:1-1:9: warning  The link URL should only without host: '/mylink'  url-no-domain  remark-lint
-3:1-3:11: warning  The image URL should only without host: '/echo.png'  url-no-domain  remark-lint
+      1:1-1:34  warning  The link URL should only without host: '/mylink'                                       url-no-domain  remark-lint
+      4:1-4:49  warning  The image URL should only without host: '/echo.png'                                    url-no-domain  remark-lint
+      8:1-8:52  warning  The definition URL should only without host: '/more/text'                              url-no-domain  remark-lint
 ```
 
 ## Options
