@@ -1,0 +1,36 @@
+{
+  "name": "remark-lint-no-local-domain",
+  "version": "1.0.0",
+  "description": "remark-lint rule to warn on local domains in URLs in links, images, and definitions",
+  "license": "MIT",
+  "keywords": [
+    "remark",
+    "lint",
+    "rule",
+    "remark-lint-rule",
+    "empty",
+    "url",
+    "link",
+    "image"
+  ],
+  "repository": "https://github.com/muescha/remark-lint-no-local-domain",
+  "bugs": "https://github.com/muescha/remark-lint-no-local-domain/issues",
+  "author": "Michael Nietzold (https://muescha.com)",
+  "contributors": [
+    "Michael Nietzold (https://muescha.com)"
+  ],
+  "files": [
+    "index.js"
+  ],
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "debug": "^4.1.1",
+    "remark-stringify": "^8.1.0",
+    "unified": "^9.0.0",
+    "unified-lint-rule": "^1.0.0",
+    "unist-util-generated": "^1.1.0",
+    "unist-util-inspect": "^6.0.0",
+    "unist-util-source": "^2.0.0",
+    "unist-util-visit": "^2.0.0"
+  }
+}
