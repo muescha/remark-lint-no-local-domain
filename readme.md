@@ -41,9 +41,9 @@ No messages.
 
 ## Install
 
-[npm][]:
+[npm][https://docs.npmjs.com/cli/install]:
 
-```sh
+```shell
 npm install remark-lint-no-local-domain
 ```
 
@@ -57,7 +57,7 @@ You probably want to use it on the CLI through a config file:
    "plugins": [
      …
      "lint",
-+    "lint-url-no-domain",
++     ["remark-lint-no-local-domain", { domain: "mydomain.com" }],
      …
    ]
  }
@@ -66,8 +66,8 @@ You probably want to use it on the CLI through a config file:
 
 Or use it on the CLI directly
 
-```sh
-remark -u lint -u lint-url-no-domain readme.md
+```shell
+remark -u lint -u lint-url-no-domain=??? readme.md
 ```
 
 Or use this on the API:
@@ -78,7 +78,7 @@ Or use this on the API:
 
  remark()
    .use(require('remark-lint'))
-+  .use(require('remark-lint-no-local-domain'))
++  .use(require('remark-lint-no-local-domain'), { domain: "mydomain.com" })
    .process('_Emphasis_ and **importance**', function (err, file) {
      console.error(report(err || file))
    })
