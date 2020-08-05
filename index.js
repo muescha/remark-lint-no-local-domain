@@ -22,10 +22,16 @@ function noLocalDomain(tree, file, options) {
   var debugCheck = debug.extend("check")
   var debugInfos = debug.extend("infos")
 
-  // let domTest = /^http[s]*:\/\/[www.]*(gatsbyjs\.org|agilitycms\.com)[/]?/
-  let domTest = /^http[s]*:\/\/[www.]*gatsbyjs\.org[/]?/i
+  // domains := string | string[]
+  // maybe allow also as RegExp https://github.com/zslabs/remark-relative-links/pull/4/files
+  var domain = options.domain
 
-  //fronmatter fields
+  domain = Array.isArray(domain) ? domain : [domain];
+
+  var domains = domain.map( d => d.replace(".","\\.")).join("|")
+  let domTest = new RegExp(`^http[s]?://(www\\.)?(${domains})[/]?`, 'i')
+
+  //frontmatter fields ignored
   // /blog/2020-07-07-wordpress-source-beta/index.mdx
   // image: ./Gatsby-Wapuus.png
 
@@ -60,6 +66,7 @@ function noLocalDomain(tree, file, options) {
       // - undefined = show all
       // - true = use only root domains without a path
       // - false = use only root domains with a path
+      // TODO: avoid the boolean trap- create enum: ALL_DOMAINS, ONLY_ROOT_DOMAINS, NO_ROOD_DOMAINS
       if ((options.root !== undefined) && (isRoot !== options.root)) {
         debugInfos(chalk.grey("   ----> " + node.type.padEnd(10) + ": " + `LocalLinks: ${options.root} -> ignored: ${newPath}`))
         return
@@ -68,6 +75,7 @@ function noLocalDomain(tree, file, options) {
       // - undefined = check all
       // - true = check only linkified links
       // - false = check only not linkified links
+      // TODO: avoid the boolean trap - create enum: ALL_LINKS, ONLY_LINKIFIED, NO_LINKIFIED
       if ((options.linkified !== undefined) && (isAutoLink !== options.linkified)) {
         debugInfos(chalk.grey("   ----> " + node.type.padEnd(10) + ": " + `linified: ${options.linkified} -> ignore linified: ${source(node, file)}`))
         return
@@ -89,6 +97,7 @@ function noLocalDomain(tree, file, options) {
         text: newText,
         old: currentSourceCode
       }
+
       message.data = {
         domain: domain,
         patches: [{
