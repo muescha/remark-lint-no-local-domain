@@ -69,7 +69,7 @@ With the following behavior:
 |--------------------|-------------|----------|
 | `OPTIONS.ROOT.ALL` | `undefined` | show all |
 | `OPTIONS.ROOT.ONLY_ROOT` | `true` | use only root domains without a path |
-| `OPTIONS.ROOT.NO_ROOT` | `false` use only root domains with a path |
+| `OPTIONS.ROOT.NO_ROOT` | `false` | use only root domains with a path |
 
 ### `options.linkified`
 
@@ -79,9 +79,9 @@ With the following behavior:
 
 | Option | Value | Description
 |--------------------|-------------|----------|
-| `OPTIONS.LINKIFIED.ALL` |" `undefined` | show all |
-| `OPTIONS.LINKIFIED.ONLY_LINKIFIED` | `true` check only linkified links |
-| `OPTIONS.LINKIFIED.NO_LINKIFIED` | `false` check only not linkified links |
+| `OPTIONS.LINKIFIED.ALL` | `undefined` | show all |
+| `OPTIONS.LINKIFIED.ONLY_LINKIFIED` | `true` | check only linkified links |
+| `OPTIONS.LINKIFIED.NO_LINKIFIED` | `false` | check only not linkified links |
 
 ## Install
 
