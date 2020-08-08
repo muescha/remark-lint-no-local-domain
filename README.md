@@ -64,22 +64,24 @@ The domain which should prohibited as a RegExp.
 
 With the following behavior:
 
-|--------------------|-------------|----------|      
+     
 | Option | Value | Description
 |--------------------|-------------|----------|
-| `OPTIONS.ROOT.ALL' | 'undefined` | show all |
-| `OPTIONS.ROOT.ONLY_ROOT' | `true` | use only root domains without a path |
-| `OPTIONS.ROOT.NO_ROOT' | `false` use only root domains with a path |
+| `OPTIONS.ROOT.ALL` | `undefined` | show all |
+| `OPTIONS.ROOT.ONLY_ROOT` | `true` | use only root domains without a path |
+| `OPTIONS.ROOT.NO_ROOT` | `false` use only root domains with a path |
 
 ### `options.linkified`
 
 `linkified := <undefined|true|false>`
 
 With the following behavior:
-      
-- `OPTIONS.LINKIFIED.ALL': `undefined` show all
-- `OPTIONS.LINKIFIED.ONLY_LINKIFIED': `true` check only linkified links
-- `OPTIONS.LINKIFIED.NO_LINKIFIED': `false` check only not linkified links
+
+| Option | Value | Description
+|--------------------|-------------|----------|
+| `OPTIONS.LINKIFIED.ALL` |" `undefined` | show all |
+| `OPTIONS.LINKIFIED.ONLY_LINKIFIED` | `true` check only linkified links |
+| `OPTIONS.LINKIFIED.NO_LINKIFIED` | `false` check only not linkified links |
 
 ## Install
 
