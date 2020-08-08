@@ -64,12 +64,11 @@ The domain which should prohibited as a RegExp.
 
 With the following behavior:
 
-     
-| Option | Value | Description
-|--------------------|-------------|----------|
-| `OPTIONS.ROOT.ALL` | `undefined` | show all |
-| `OPTIONS.ROOT.ONLY_ROOT` | `true` | use only root domains without a path |
-| `OPTIONS.ROOT.NO_ROOT` | `false` | use only root domains with a path |
+| Value       | Description                          | Option                   |
+|-------------|--------------------------------------|--------------------------|
+| `undefined` | check all                            | `OPTIONS.ROOT.ALL`       |
+| `true`      | use only root domains without a path | `OPTIONS.ROOT.ONLY_ROOT` |
+| `false`     | use only root domains with a path    | `OPTIONS.ROOT.NO_ROOT`   |
 
 ### `options.linkified`
 
@@ -77,11 +76,11 @@ With the following behavior:
 
 With the following behavior:
 
-| Option | Value | Description
-|--------------------|-------------|----------|
-| `OPTIONS.LINKIFIED.ALL` | `undefined` | show all |
-| `OPTIONS.LINKIFIED.ONLY_LINKIFIED` | `true` | check only linkified links |
-| `OPTIONS.LINKIFIED.NO_LINKIFIED` | `false` | check only not linkified links |
+| Value       | Description                    | Option                             |
+|-------------|--------------------------------|------------------------------------|
+| `undefined` | check all                      | `OPTIONS.LINKIFIED.ALL`            |
+| `true`      | check only linkified links     | `OPTIONS.LINKIFIED.ONLY_LINKIFIED` |
+| `false`     | check only not linkified links | `OPTIONS.LINKIFIED.NO_LINKIFIED`   |
 
 ## Install
 
