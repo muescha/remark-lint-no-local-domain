@@ -62,21 +62,24 @@ The domain which should prohibited as a RegExp.
 
 `root := <undefined|true|false>`
 
-with the following behavior
-      
-- `undefined`: show all
-- `true`: use only root domains without a path
-- `false`: use only root domains with a path
+With the following behavior:
+
+|--------------------|-------------|----------|      
+| Option | Value | Description
+|--------------------|-------------|----------|
+| `OPTIONS.ROOT.ALL' | 'undefined` | show all |
+| `OPTIONS.ROOT.ONLY_ROOT' | `true` | use only root domains without a path |
+| `OPTIONS.ROOT.NO_ROOT' | `false` use only root domains with a path |
 
 ### `options.linkified`
 
 `linkified := <undefined|true|false>`
 
-with the following behavior
+With the following behavior:
       
-- `undefined`: show all
-- `true`: check only linkified links
-- `false`: check only not linkified links
+- `OPTIONS.LINKIFIED.ALL': `undefined` show all
+- `OPTIONS.LINKIFIED.ONLY_LINKIFIED': `true` check only linkified links
+- `OPTIONS.LINKIFIED.NO_LINKIFIED': `false` check only not linkified links
 
 ## Install
 
@@ -112,8 +115,8 @@ remark -u lint -u lint-url-no-domain=??? readme.md
 Or use this on the API:
 
 ```diff
- var remark = require('remark')
- var report = require('vfile-reporter')
+ const remark = require('remark')
+ const report = require('vfile-reporter')
 
  remark()
    .use(require('remark-lint'))
@@ -122,3 +125,18 @@ Or use this on the API:
      console.error(report(err || file))
    })
 ```
+
+You can use the predefined `OPTIONS` to avoid the boolean trap:
+```diff
+ const remark = require('remark')
+ const report = require('vfile-reporter')
++const options = require("remark-lint-no-local-domain").OPTIONS
+
+ remark()
+   .use(require('remark-lint'))
++  .use(require('remark-lint-no-local-domain'), { domain: "mydomain.com", root: options.ROOT.NO_ROOT, linkified: options.LINKIFIED.ALL })
+   .process('_Emphasis_ and **importance**', function (err, file) {
+     console.error(report(err || file))
+   })
+```
+
