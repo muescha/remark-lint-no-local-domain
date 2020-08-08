@@ -3,37 +3,56 @@
  */
 
 "use strict"
-var debug = require("debug")("remark-lint-no-local-domain")
-var unified = require("unified")
-var source = require("unist-util-source")
-var rule = require("unified-lint-rule")
-var visit = require("unist-util-visit")
-var generated = require("unist-util-generated")
-var stringify = require("remark-stringify")
-var inspect = require("unist-util-inspect")
-var chalk = require("chalk")
+const { convertObject } = require("./utils") //.convertObject
+
+const debug = require("debug")("remark-lint-no-local-domain")
+const unified = require("unified")
+const source = require("unist-util-source")
+const rule = require("unified-lint-rule")
+const visit = require("unist-util-visit")
+const generated = require("unist-util-generated")
+const stringify = require("remark-stringify")
+const inspect = require("unist-util-inspect")
+const chalk = require("chalk")
 
 module.exports = rule("remark-lint:url-no-domain", noLocalDomain)
+
+const OPTIONS = {
+  ROOT: {
+    ALL: undefined,
+    ONLY_ROOT: true,
+    NO_ROOT: false,
+  },
+  LINKIFIED: {
+    ALL: undefined,
+    ONLY_LINKIFIED: true,
+    NO_LINKIFIED: false,
+  }
+}
+
+const OPTIONS_INFO = convertObject(OPTIONS)
+
+module.exports.OPTIONS = OPTIONS
 
 function noLocalDomain(tree, file, options) {
 
   options = options || {}
 
-  var debugCheck = debug.extend("check")
-  var debugInfos = debug.extend("infos")
+  const debugCheck = debug.extend("check")
+  const debugInfos = debug.extend("infos")
 
   // domains := string | string[]
   // maybe allow also as RegExp https://github.com/zslabs/remark-relative-links/pull/4/files
-  var domain = options.domain
+  let domain = options.domain
 
   domain = Array.isArray(domain) ? domain : [domain];
 
-  var domains = domain.map( d => d.replace(".","\\.")).join("|")
-  let domTest = new RegExp(`^http[s]?://(www\\.)?(${domains})[/]?`, 'i')
+  const domains = domain.map( d => d.replace(".","\\.")).join("|")
+  const domTest = new RegExp(`^http[s]?://(www\\.)?(${domains})[/]?`, 'i')
 
   //frontmatter fields ignored
   // /blog/2020-07-07-wordpress-source-beta/index.mdx
-  // image: ./Gatsby-Wapuus.png
+  // image: ./Gatsby-image.png
 
   debugCheck("")
   debugCheck(file.path)
@@ -47,7 +66,7 @@ function noLocalDomain(tree, file, options) {
     if (!generated(node) && node.url && domTest.test(node.url)) {
       debugInfos(chalk.red("   ----> " + node.type.padEnd(10) + ": " + source(node, file)))
 
-      // exact position of domain text makes no sense because of
+      // exact position of domain text makes no sense because
       // in terminal it is auto-linkified
       //
       // let position = {
@@ -63,21 +82,21 @@ function noLocalDomain(tree, file, options) {
       const isRoot = newPath === "/"
 
       // root = <undefined|true|false>
-      // - undefined = show all
-      // - true = use only root domains without a path
-      // - false = use only root domains with a path
-      // TODO: avoid the boolean trap- create enum: ALL_DOMAINS, ONLY_ROOT_DOMAINS, NO_ROOD_DOMAINS
+      // - OPTIONS.ROOT.ALL undefined = show all
+      // - OPTIONS.ROOT.ONLY_ROOT true = use only root domains without a path
+      // - OPTIONS.ROOT.NO_ROOT false = use only domains with a path
       if ((options.root !== undefined) && (isRoot !== options.root)) {
-        debugInfos(chalk.grey("   ----> " + node.type.padEnd(10) + ": " + `LocalLinks: ${options.root} -> ignored: ${newPath}`))
+        const info = OPTIONS_INFO.ROOT[options.root]
+        debugInfos(chalk.yellow("   ----> " + node.type.padEnd(10) + ": " + `options.root: ${info} -> ignored: ${newPath}`))
         return
       }
       // linkified = <undefined|true|false>
-      // - undefined = check all
-      // - true = check only linkified links
-      // - false = check only not linkified links
-      // TODO: avoid the boolean trap - create enum: ALL_LINKS, ONLY_LINKIFIED, NO_LINKIFIED
+      // - OPTIONS.LINKIFIED.ALL: undefined = check all
+      // - OPTIONS.LINKIFIED.ONLY_LINKIFIED: true = check only linkified links
+      // - OPTIONS.LINKIFIED.NO_LINKIFIED false = check only not linkified links
       if ((options.linkified !== undefined) && (isAutoLink !== options.linkified)) {
-        debugInfos(chalk.grey("   ----> " + node.type.padEnd(10) + ": " + `linified: ${options.linkified} -> ignore linified: ${source(node, file)}`))
+        const info = OPTIONS_INFO.LINKIFIED[options.linkified]
+        debugInfos(chalk.yellow("   ----> " + node.type.padEnd(10) + ": " + `options.linkified: ${info} -> ignore linkified: ${source(node, file)}`))
         return
       }
       let message = file.message(`The ${node.type} URL should only without host: '${newPath}'`, node)
@@ -119,6 +138,7 @@ function noLocalDomain(tree, file, options) {
 //   maybe if unist-util-source is equal the link?
 //   not works because domain.com gets [domain.com](https://domain.com)
 //   i have to do more magic
+//   or if stringify is not equal original source code
 // function isLinkified2(node, file){
 //
 //   return node.url === source(node, file)
