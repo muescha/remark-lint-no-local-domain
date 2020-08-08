@@ -136,7 +136,11 @@ You can use the predefined `OPTIONS` to avoid the boolean trap:
 
  remark()
    .use(require('remark-lint'))
-+  .use(require('remark-lint-no-local-domain'), { domain: "mydomain.com", root: options.ROOT.NO_ROOT, linkified: options.LINKIFIED.ALL })
++  .use(require('remark-lint-no-local-domain'), {
++       domain: "mydomain.com",
++       root: options.ROOT.NO_ROOT,
++       linkified: options.LINKIFIED.ALL
++  })
    .process('_Emphasis_ and **importance**', function (err, file) {
      console.error(report(err || file))
    })
